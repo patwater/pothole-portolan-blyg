@@ -6,7 +6,7 @@ The research, the dossiers and the automation live in `patwater/pothole-portolan
 
 ## What differs from upstream
 
-Only three files, so that upgrades merge cleanly:
+Only three files, so that upgrades merge cleanly. `wrangler.jsonc` also keeps one scheduled trigger (every 15 minutes) instead of upstream's three, because the Workers Free plan allows five per account and other Workers on the account use some. The comment there says why nothing the project needs is lost, and how to restore the three on Workers Paid.
 
 - `wrangler.jsonc` names the Worker `pothole-portolan-blyg`, the D1 database `pothole-portolan-blyg` and the R2 bucket `pothole-portolan-blyg-media`. There is no `database_id` and no `account_id`, on purpose: `wrangler deploy` creates the database and bucket by these names on the first deploy and finds them by name afterwards.
 - `scripts/pothole-deploy.sh` is the deploy command. It applies the D1 migrations and deploys, in the right order for a first install and for an upgrade.
@@ -17,7 +17,7 @@ Only three files, so that upgrades merge cleanly:
 1. **Create the Worker from this repository.** In the Cloudflare dashboard, open Workers & Pages, choose Create, then Import a repository, and pick `patwater/pothole-portolan-blyg`. Set:
    - Project name: `pothole-portolan-blyg` (it must match `name` in `wrangler.jsonc`).
    - Production branch: `main`.
-   - Build command: leave empty. `npm ci` runs automatically, and the Studio builds itself in its `postinstall` step.
+   - Build command: leave empty. `npm ci` runs automatically, and the Studio builds itself in its `postinstall` step, so `npm run build` there only builds it twice.
    - Deploy command: `bash scripts/pothole-deploy.sh`.
    - Under Advanced settings, add the build variable `NODE_VERSION` with the value `22`.
 2. **Let the first build run.** It creates the database and the bucket, deploys, and applies the migrations. If the build log shows a permission error on D1 or R2, open the Worker's Settings, then Build, and give the build an API token that has D1 Edit and Workers R2 Storage Edit, then retry the build.

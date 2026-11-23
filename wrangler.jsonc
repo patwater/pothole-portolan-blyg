@@ -41,11 +41,15 @@
     "MOUNT": ""
   },
 
-  // Check saved XML every minute; poll due subscriptions every 15 minutes.
-  // Repair legacy imports and prune expired mentions daily at midnight UTC.
-  // The feed-only tick skips subscription scans and housekeeping.
+  // Pothole Portolan: one cron instead of upstream's three, because the account is on the
+  // Workers Free plan (5 cron triggers per account, shared with other Workers). Nothing is lost
+  // that the project needs (src/index.ts, scheduled()):
+  //   - "* * * * *" only pre-warms feed.xml; the feed rebuilds itself on request when stale.
+  //   - "0 0 * * *" is covered: the quarter-hour tick at 00:00 UTC runs the same daily work.
+  //   - "*/15 * * * *" polls subscriptions and retries outbound mentions. Kept.
+  // On Workers Paid, upstream's three crons can be restored.
   "triggers": {
-    "crons": ["* * * * *", "*/15 * * * *", "0 0 * * *"]
+    "crons": ["*/15 * * * *"]
   },
 
   "d1_databases": [
