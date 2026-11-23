@@ -15,7 +15,7 @@
   // configure an instance — if it does, that is a bug in the client, because
   // it would break your upgrade path. Report it.
 
-  "name": "blyg",
+  "name": "pothole-portolan-blyg",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-01",
 
@@ -51,13 +51,11 @@
   "d1_databases": [
     {
       "binding": "DB",
-      // FILL ME (2 of 4) — `npx wrangler d1 create blyg-yourname` prints both.
-      "database_name": "blyg",
-      // FILL ME — a deploy with this placeholder fails loudly, which is the
-      // intent: it is better than a UUID-shaped value that deploys somewhere
-      // unexpected. Local dev and the test suite use miniflare's own D1 and
-      // never read it.
-      "database_id": "FILL-ME-run-npm-run-init",
+      // Pothole Portolan: named, with no database_id on purpose. `wrangler deploy` creates a
+      // D1 database with this name on the first deploy and finds it by name afterwards, so the
+      // Cloudflare dashboard's Git build can deploy without anyone copying an ID here.
+      // scripts/pothole-deploy.sh applies the migrations. See POTHOLE-PORTOLAN.md.
+      "database_name": "pothole-portolan-blyg",
       "migrations_dir": "migrations"
     }
   ],
@@ -65,10 +63,10 @@
   "r2_buckets": [
     {
       "binding": "MEDIA",
-      // FILL ME (3 of 4) — `npx wrangler r2 bucket create blyg-yourname-media`.
+      // Pothole Portolan: created by name on the first deploy, like the database.
       // Stores image attachments and the rendered feed cache. Feed objects use
       // an internal prefix and are served only by the feed handler.
-      "bucket_name": "blyg-media"
+      "bucket_name": "pothole-portolan-blyg-media"
     }
   ]
 
