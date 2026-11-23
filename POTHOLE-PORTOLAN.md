@@ -45,4 +45,4 @@ Read the release notes in `CHANGELOG.md` first. A release whose notes mention a 
 
 ## Every month
 
-The Studio token expires after 30 days. When `blyg-drafts` fails with a 401 or 403, create a new token in the Studio and replace the `BLYGGER_DRAFT_TOKEN` secret.
+The Studio token expires after 30 days. Every Studio credential does, by the Studio's design, and no setting changes it. You do not need to track the date: from 7 days before expiry, the `blyg-drafts` workflow in `patwater/pothole-portolan-worker` opens an issue labelled `studio-token` with the renewal steps. Create a new token in the Studio, replace the `BLYGGER_DRAFT_TOKEN` secret, revoke the old token, and close the issue.
