@@ -21,7 +21,7 @@ Only three files, so that upgrades merge cleanly. `wrangler.jsonc` also keeps on
    - Deploy command: `bash scripts/pothole-deploy.sh`.
    - Under Advanced settings, add the build variable `NODE_VERSION` with the value `22`.
 2. **Let the first build run.** It creates the database and the bucket, deploys, and applies the migrations. If the build log shows a permission error on D1 or R2, open the Worker's Settings, then Build, and give the build an API token that has D1 Edit and Workers R2 Storage Edit, then retry the build.
-3. **Set the two secrets.** In the Worker's Settings, then Variables and Secrets, add two values of type Secret:
+3. **Set the two secrets.** In the Worker's Settings, then Variables and Secrets, add two values of type **Secret**, not Text. (`wrangler.jsonc` sets `keep_vars`, so deploys keep dashboard variables either way, but a Secret is also hidden from view.) Replacing `COOKIE_SECRET` later signs you out and invalidates every Studio token, so create a new token afterwards:
    - `COOKIE_SECRET`: 64 random hex characters, for example from a password manager. Nobody needs to remember it.
    - `OWNER_PASSWORD`: the password you will sign in with. Until it is set, nobody can sign in.
 4. **Attach the subdomain.** In the Worker's Settings, then Domains & Routes, add a Custom domain such as `potholes.pioneeringspirit.xyz`. Cloudflare creates the DNS record. Publish nothing before this step, because a blyg's address is part of its identity.

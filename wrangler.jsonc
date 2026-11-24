@@ -16,6 +16,11 @@
   // it would break your upgrade path. Report it.
 
   "name": "pothole-portolan-blyg",
+  // Pothole Portolan: keep variables set in the Cloudflare dashboard across deploys. Without this, every
+  // Git build replaces the Worker's plain-text variables with the ones in this file and removes the rest,
+  // so a COOKIE_SECRET or OWNER_PASSWORD added as type Text instead of Secret disappears on the next
+  // deploy (sign-in then fails with {"error":"internal server error"}). Secrets are kept either way.
+  "keep_vars": true,
   "main": "src/index.ts",
   "compatibility_date": "2026-07-01",
 
