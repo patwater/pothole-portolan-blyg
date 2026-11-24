@@ -29,7 +29,7 @@ Only three files, so that upgrades merge cleanly. `wrangler.jsonc` also keeps on
 
 ## Connecting the Pothole Portolan automation
 
-1. In the Studio, open More, then Client access. Create a REST API token named `pothole-portolan blyg-drafts` with only `owner:read` and `owner:draft`, and copy it before closing the dialog. It expires after 30 days.
+1. Sign in at `https://potholeportolan.org/studio`, not the `workers.dev` address: a token works only at the address where it was created, because the Studio puts that address in the token and checks it. Then open More, then Client access. Create a REST API token named `pothole-portolan blyg-drafts` with only `owner:read` and `owner:draft`, and copy it before closing the dialog. It expires after 30 days.
 2. In `patwater/pothole-portolan` on GitHub, open Settings, then Secrets and variables, then Actions:
    - Add the secret `BLYGGER_DRAFT_TOKEN` with that token.
    - Add the variable `BLYGGER_API_BASE` with the value `https://<your subdomain>/api`.
